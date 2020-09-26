@@ -1,6 +1,5 @@
 package hr.ja.myhttp.model;
 
-import hr.ja.myhttp.db.Base;
 import hr.ja.myhttp.db.MemoryEntity;
 
 public class User extends MemoryEntity<User> {
