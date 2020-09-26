@@ -1,2 +1,11 @@
 /.idea/
 /myhttp.iml
+/target/
+/.apt_generated/
+/.apt_generated_tests/
+/.apt_generated/
+/.apt_generated_tests/
+/.settings/
+/bin/
+/.project
+/.classpath

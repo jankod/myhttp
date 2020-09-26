@@ -3,8 +3,10 @@ package hr.ja.myhttp.db;
 import hr.ja.myhttp.model.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,11 @@ public class MemoryEntity<T extends MemoryEntity<T>> implements Serializable {
 
     private Long id;
 
+
+    public static <T extends MemoryEntity> List<T> all() {
+        return new ArrayList<T>((Collection<? extends T>) map.values());
+    }
+
     public void save() {
         map.put(this.getId(), (T) this);
     }
@@ -27,6 +34,7 @@ public class MemoryEntity<T extends MemoryEntity<T>> implements Serializable {
 
     public void deleteThis() {
         map.remove(this.getId());
+        this.setId(null);
     }
 
     public static void delete(Long id) {
@@ -46,5 +54,12 @@ public class MemoryEntity<T extends MemoryEntity<T>> implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+               "id=" + id +
+               '}';
     }
 }
