@@ -1,6 +1,5 @@
 package hr.ja.myhttp;
 
-import hr.ja.myhttp.db.UserDao;
 import hr.ja.myhttp.model.User;
 
 import java.util.Collection;
@@ -8,13 +7,19 @@ import java.util.Collection;
 public class Main {
     public static void main(String[] args) {
         var user = new User();
-        user.setId((long) 22);
 
+        long id = 222;
+        user.setId(id);
+        user.setName("pero");
 
-        var userDao = new UserDao();
-        userDao.save(user);
+        user.save();
 
-        Collection<User> users = userDao.search(user1 -> user1.getId() > 2);
+        Collection<User> users = User.search(user1 -> user1.getId() > 2);
+        System.out.println(users);
+
+        User us = User.get(id);
+
+        System.out.println(us);
 
 
     }

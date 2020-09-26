@@ -1,17 +1,23 @@
 package hr.ja.myhttp.model;
 
+import hr.ja.myhttp.db.Base;
 import hr.ja.myhttp.db.MemoryEntity;
 
-public class User implements MemoryEntity {
+public class User extends MemoryEntity<User> {
 
-    private Long id;
+    private String name;
 
-    @Override
-    public Long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String toString() {
+
+        return "user id: " + getId() + "Name: " + name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
