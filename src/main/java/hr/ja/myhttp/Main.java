@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import hr.ja.myhttp.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.StopWatch;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -52,6 +53,8 @@ public class Main {
 	}
 
 	private void server() throws IOException {
+		StopWatch stop = new StopWatch();
+		stop.start();
 		ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
 
 		HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8001), 0);
