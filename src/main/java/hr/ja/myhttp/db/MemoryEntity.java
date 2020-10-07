@@ -1,6 +1,6 @@
 package hr.ja.myhttp.db;
 
-import hr.ja.myhttp.model.User;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-
-//class Base<T extends Base<T>> {}
-
+@Slf4j
 public class MemoryEntity<T extends MemoryEntity<T>> implements Serializable {
 
     private static final HashMap<Long, MemoryEntity<?>> map = new HashMap<>();
@@ -20,12 +18,22 @@ public class MemoryEntity<T extends MemoryEntity<T>> implements Serializable {
     private Long id;
 
 
+    public MemoryEntity() {
+        save();
+    }
+
     public static <T extends MemoryEntity> List<T> all() {
         return new ArrayList<T>((Collection<? extends T>) map.values());
     }
 
-    public void save() {
+    protected void save() {
+        this.setId(nextId());
         map.put(this.getId(), (T) this);
+        //log.debug("Save {}", map);
+    }
+
+    protected long nextId() {
+        return map.size();
     }
 
     public static <T extends MemoryEntity> T get(Long id) {
@@ -58,8 +66,6 @@ public class MemoryEntity<T extends MemoryEntity<T>> implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-               "id=" + id +
-               '}';
+        return "id=" + id;
     }
 }

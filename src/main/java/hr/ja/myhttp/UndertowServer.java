@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 
 @Slf4j
-public class HelloWorldServer {
+public class UndertowServer {
 
     public static void main(final String[] args) {
         StopWatch stop = new StopWatch();
