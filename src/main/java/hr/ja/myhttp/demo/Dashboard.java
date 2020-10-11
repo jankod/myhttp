@@ -4,25 +4,28 @@ import hr.ja.myhttp.gui.Route;
 import hr.ja.myhttp.gui.SiteContext;
 import hr.ja.myhttp.gui.Page;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
 import spark.Request;
 import spark.Response;
 import spark.Session;
 
 @Route(value = "/", name = "main")
-@Data
+@Getter
+@Setter
 public class Dashboard extends Page {
 
     String data1;
-    String linkSecond = link("second","sec");
+    String linkSecond = link("second", "se");
 
     public Dashboard() {
 
         String html = """
                 <h1>Dashboard</h1>
                 <p>${data1}</p> 
-                <p>${link('main')}</p>
-                <p>Link je ${linkSecond}</p>      
+                <p>Link 1 ${link('second', 'se')}</p>
+                <p>Link 2 ${linkSecond}</p>      
                 """;
         setTemplate(html);
         data1 = RandomStringUtils.randomAlphabetic(2);

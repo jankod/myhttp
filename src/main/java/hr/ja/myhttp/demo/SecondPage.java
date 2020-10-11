@@ -5,12 +5,15 @@ import hr.ja.myhttp.gui.Route;
 import hr.ja.myhttp.gui.SiteContext;
 import hr.ja.myhttp.gui.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
 import spark.Request;
 import spark.Response;
 
 
-@Data
+@Getter
+@Setter
 @Route(value = "/second", name="se")
 public class SecondPage extends Page {
 
@@ -26,7 +29,8 @@ public class SecondPage extends Page {
         setTemplate("""
                 
                 <h2>Second page</h2>
-                <a href='/'>Main page</a>
+                <a href='/'>Main page full load</a>
+                <p>${link('Main page ajax', 'main')}</p>
                 <p>Data 2: ${data2}</p>
                 <p>Table</p>
                 ${table}

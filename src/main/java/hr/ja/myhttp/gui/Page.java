@@ -1,13 +1,15 @@
 package hr.ja.myhttp.gui;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import spark.Request;
 import spark.Response;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter @Setter
 public abstract class Page extends Widget {
 
     private Breadcrumb breadcrumb;
@@ -36,7 +38,7 @@ public abstract class Page extends Widget {
 
     public String link(String label, String routeName) {
         //language=InjectedFreeMarker
-        return "<a data-goto='%s' href='#'>%s</a>".formatted(routeName, label);
+        return "<a data-goto='%s' href='#%s'>%s</a>".formatted(routeName, routeName, label);
     }
 
 
