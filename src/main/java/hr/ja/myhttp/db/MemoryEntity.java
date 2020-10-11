@@ -26,7 +26,7 @@ public class MemoryEntity<T extends MemoryEntity<T>> implements Serializable {
         return new ArrayList<T>((Collection<? extends T>) map.values());
     }
 
-    protected void save() {
+    public void save() {
         this.setId(nextId());
         map.put(this.getId(), (T) this);
         //log.debug("Save {}", map);

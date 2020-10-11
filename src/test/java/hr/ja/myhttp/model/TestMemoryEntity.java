@@ -1,20 +1,15 @@
 package hr.ja.myhttp.model;
 
-
-import hr.ja.myhttp.db.MemoryEntity;
 import hr.ja.myhttp.db.MemoryRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 @Slf4j
 public class TestMemoryEntity {
 
-    @Test
     public void test1() {
         MemoryRepo repo = new MemoryRepo("/tmp/mydb.txt", User.class, Book.class);
 
@@ -23,7 +18,6 @@ public class TestMemoryEntity {
         List<User> users = User.all();
         log.debug("Found {} users", users);
         //Assertions.assertNotNull(u.getId());
-
 
         List<Book> books = Book.all();
         log.debug("Found {} books.", books);

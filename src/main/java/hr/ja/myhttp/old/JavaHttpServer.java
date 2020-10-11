@@ -1,4 +1,4 @@
-package hr.ja.myhttp;
+package hr.ja.myhttp.old;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
