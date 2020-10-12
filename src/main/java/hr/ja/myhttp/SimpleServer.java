@@ -33,7 +33,7 @@ public class SimpleServer {
     public void start(int port) {
         // TODO: check if all page has unique page name
         Spark.port(port);
-        Spark.staticFileLocation("public");
+        Spark.staticFileLocation("/public");
 
 
         for (Class<? extends Page> pageClass : configuration.getPages()) {

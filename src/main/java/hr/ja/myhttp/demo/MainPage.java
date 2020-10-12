@@ -2,10 +2,8 @@ package hr.ja.myhttp.demo;
 
 import hr.ja.myhttp.gui.Route;
 import hr.ja.myhttp.gui.SiteContext;
-import hr.ja.myhttp.util.Page;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,27 +16,29 @@ public class MainPage extends BasePage {
 
     public static final String NAME = "main";
 
-    String data1;
     String linkSecond = link("second", "se");
+    UserForm userForm;
 
     public MainPage() {
         //language=InjectedFreeMarker
         String html = """
-                <h1>Dashboard</h1>
-                <p>${data1}</p> 
+                <h1>Main page</h1>
                 <p>Link 1 ${link('Second', 'se')}</p>
-                <p>Link 2 ${linkSecond}</p>      
+                <p>Link 2 ${linkSecond}</p>
+                
+                <p>Form</p>
+                <p>${form(userForm)}</p>      
                 """;
         //language=JavaScript
         setJs("""
                 console.log("Exec from setJs MainPage")
                 """);
         setTemplate(html);
-        data1 = RandomStringUtils.randomAlphabetic(2);
         setTitle("Dashboard");
     }
 
     @Override
     public void onRequest(HttpServletRequest req, HttpServletResponse resp, SiteContext siteContext) {
+        userForm = new UserForm();
     }
 }

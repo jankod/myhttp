@@ -43,7 +43,7 @@ public class Table<T> extends Widget {
                 """);
     }
 
-    public TableColumn addColumn(ValueProvider<T, ?> valueProvider) {
+    public TableColumn createColumn(ValueProvider<T, ?> valueProvider) {
         TableColumn tableColumn = new TableColumn(valueProvider);
         this.columns.add(tableColumn);
         return tableColumn;

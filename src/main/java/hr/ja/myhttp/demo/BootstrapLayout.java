@@ -49,7 +49,7 @@ public class BootstrapLayout extends LayoutPage {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav mr-auto">
                         <li class="nav-item ${isActive('main')}">
-                          <a class="nav-link" href="#home" data-goto='main'>Home </a>
+                          <a class="nav-link" href="#home" data-goto='main'>Main </a>
                         </li>
                         <li class="nav-item ${isActive('se')}">
                           <a class="nav-link" href="#se" data-goto="se">Second</a>
@@ -61,7 +61,7 @@ public class BootstrapLayout extends LayoutPage {
                   
                   
                   
-                    <div id='content'>
+                    <div id="content" class='container'>
                          ${currentPage}      
                     </div>
                     <div class='footer'>footer for all</div>

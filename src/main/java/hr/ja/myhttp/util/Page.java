@@ -1,5 +1,7 @@
 package hr.ja.myhttp.util;
 
+import hr.ja.myhttp.form.FormUtil;
+import hr.ja.myhttp.form.FormWidget;
 import hr.ja.myhttp.gui.SiteContext;
 import hr.ja.myhttp.gui.Widget;
 import hr.ja.myhttp.util.PageHolder;
@@ -33,6 +35,10 @@ public abstract class Page extends Widget {
 
     public WebSite getWebSite() {
         return new WebSite();
+    }
+
+    public FormWidget form(Object o) {
+        return FormUtil.toForm(o);
     }
 
 }
