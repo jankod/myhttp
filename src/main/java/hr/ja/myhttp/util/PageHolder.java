@@ -12,6 +12,7 @@ import spark.Response;
 import spark.Spark;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Getter
@@ -48,7 +49,32 @@ public class PageHolder {
         layoutPage.setCurrentPage(page);
         layoutPage.onRequest(req, response.raw(), context);
 
-        return TemplateParser.parsePage(layoutPage);
+        String html = TemplateParser.parsePage(layoutPage);
+
+        return appendJs(page, html, response.raw(), true);
+    }
+
+    private String appendJs(Page page, String html, HttpServletResponse resp, boolean startNow) {
+        if (!StringUtils.isEmpty(page.getJs())) {
+
+
+            if (startNow) {
+                resp.setHeader("jsCallBack", "execNewJs");
+                html += """
+                         <script> %s </script>
+                        """.formatted(page.getJs());
+            } else {
+                html += """
+                        <script>
+                        function execNewJs () {
+                            %s
+                        };
+                        </script>
+                        """.formatted(page.getJs());
+            }
+        }
+        return html;
+
     }
 
     @SneakyThrows
@@ -58,26 +84,28 @@ public class PageHolder {
         page.onRequest(req.raw(), resp.raw(), siteContext);
         String pageHtmlPart = TemplateParser.parsePage(page);
 
-        if(!StringUtils.isEmpty(page.getJs())) {
+        if (!StringUtils.isEmpty(page.getJs())) {
             resp.raw().setHeader("jsCallBack", "execNewJs");
         }
-        return addJs(pageHtmlPart, page.getJs());
+
+        return appendJs(page, pageHtmlPart, resp.raw(), false);
+        //return addJs(pageHtmlPart, page.getJs());
         //„return pageHtmlPart;
     }
 
-    private String addJs(String pageHtmlPart, String js) {
-        if(StringUtils.isEmpty(js)) {
-            return pageHtmlPart;
-        }
-
-        //language=InjectedFreeMarker
-        String html = pageHtmlPart + """
-                <script>
-                function execNewJs () {
-                    %s
-                };
-                </script>
-                """.formatted(js);
-        return html;
-    }
+//    private String addJs(String pageHtmlPart, String js) {
+//        if(StringUtils.isEmpty(js)) {
+//            return pageHtmlPart;
+//        }
+//
+//        //language=InjectedFreeMarker
+//        String html = pageHtmlPart + """
+//                <script>
+//                function execNewJs () {
+//                    %s
+//                };
+//                </script>
+//                """.formatted(js);
+//        return html;
+//    }
 }

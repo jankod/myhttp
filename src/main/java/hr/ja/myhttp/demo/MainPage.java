@@ -24,20 +24,15 @@ public class MainPage extends BasePage {
     public MainPage() {
         //language=InjectedFreeMarker
         String html = """
-                    <script type='application/javascript' type='module'>
-                if (typeof pero === "function") {
-                   // console.log("function pero() exist ", pero);
-                }
-                                
-                function pero() {
-                    //console.log("pero()");
-                }
-                </script>
                 <h1>Dashboard</h1>
                 <p>${data1}</p> 
                 <p>Link 1 ${link('Second', 'se')}</p>
                 <p>Link 2 ${linkSecond}</p>      
                 """;
+        //language=JavaScript
+        setJs("""
+                console.log("Exec from setJs MainPage")
+                """);
         setTemplate(html);
         data1 = RandomStringUtils.randomAlphabetic(2);
         setTitle("Dashboard");

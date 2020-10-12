@@ -1,4 +1,16 @@
 package hr.ja.myhttp.gui.table;
 
-public @interface TableColumn {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class TableColumn<T> {
+
+    private String header;
+    private ValueProvider<T, ?> valueProvider;
+
+    public TableColumn(ValueProvider<T, ?> valueProvider) {
+        this.valueProvider = valueProvider;
+    }
 }
