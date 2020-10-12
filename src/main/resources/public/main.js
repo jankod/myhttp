@@ -17,8 +17,14 @@ class SimpleServer {
                 return;
             }
             let url = "/page/" + goto;
-            $("#content").load(url, '', function (response, status, xhr) {
-                console.log("load finish");
+            $("#content").load(url, '', function (response, status, request) {
+                let functionName = request.getResponseHeader("jscallback");
+                console.log("function name: "+ functionName);
+                if(functionName != null) {
+                    window[functionName]();
+                }
+             //   console.log("load page finish \n", request.getAllResponseHeaders());
+                //execNewJs();
             });
             console.log(url + " " + goto);
         });

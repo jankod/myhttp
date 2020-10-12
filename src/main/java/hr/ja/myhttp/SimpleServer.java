@@ -1,9 +1,12 @@
 package hr.ja.myhttp;
 
+import hr.ja.myhttp.exception.PageDefineException;
 import hr.ja.myhttp.gui.LayoutPage;
-import hr.ja.myhttp.gui.Page;
+import hr.ja.myhttp.gui.PageCreator;
 import hr.ja.myhttp.gui.SiteContext;
+import hr.ja.myhttp.util.Page;
 import hr.ja.myhttp.util.PageHolder;
+import hr.ja.myhttp.util.SiteConfiguration;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import spark.Spark;
@@ -17,23 +20,35 @@ import java.util.Map;
 @Slf4j
 public class SimpleServer {
 
-    private List<Class<? extends Page>> pages = new ArrayList<>();
-
     private Map<String, PageHolder> pageHolderMap = new HashMap<>();
+
+    private SiteConfiguration configuration;
+
+    public SimpleServer() {
+        configuration = new SiteConfiguration();
+    }
+
 
     @SneakyThrows
     public void start(int port) {
+        // TODO: check if all page has unique page name
         Spark.port(port);
         Spark.staticFileLocation("public");
-        SiteContext context = new SiteContext();
 
-        for (Class<? extends Page> pageClass : pages) {
-            PageHolder pageHolder = new PageHolder(pageClass, context);
-            log.debug("save page name '{}'", pageHolder.getPageName());
-            pageHolderMap.put(pageHolder.getPageName(), pageHolder);
+
+        for (Class<? extends Page> pageClass : configuration.getPages()) {
+            PageHolder pageHolder = new PageHolder(pageClass, configuration);
+            String pageName = pageHolder.getPageName();
+
+            if (pageHolderMap.containsKey(pageName)) {
+                throw new PageDefineException("Page name is defined twice: '%s'".formatted(pageName));
+            }
+            pageHolderMap.put(pageName, pageHolder);
         }
+
         Spark.get("/page/:name", (request, response) -> {
-           // log.debug(request.uri());
+            /// log.debug(request.uri());
+            request.raw().getParameter("");
             String pageName = request.params(":name");
             //log.debug("Search page name '{}'", pageName);
             PageHolder ph = pageHolderMap.get(pageName);
@@ -49,8 +64,11 @@ public class SimpleServer {
 
 
     public void addPage(Class<? extends Page> page) {
-        pages.add(page);
+        configuration.getPages().add(page);
     }
 
+    public void setLayoutPage(Class<? extends LayoutPage> layoutPage) {
+        configuration.setLayoutPage(layoutPage);
+    }
 
 }

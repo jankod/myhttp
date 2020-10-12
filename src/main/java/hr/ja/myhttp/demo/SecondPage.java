@@ -1,21 +1,22 @@
 package hr.ja.myhttp.demo;
 
-import hr.ja.myhttp.gui.Page;
 import hr.ja.myhttp.gui.Route;
 import hr.ja.myhttp.gui.SiteContext;
 import hr.ja.myhttp.gui.Table;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
-import spark.Request;
-import spark.Response;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Getter
 @Setter
-@Route(value = "/second", name="se")
-public class SecondPage extends Page {
+@Route(value = "/second", name = SecondPage.NAME)
+public class SecondPage extends BasePage {
+
+    public static final String NAME = "se";
 
     private String data2;
 
@@ -23,25 +24,24 @@ public class SecondPage extends Page {
 
 
     public SecondPage() {
-
         //language=InjectedFreeMarker
-
         setTemplate("""
-                
                 <h2>Second page</h2>
-                <a href='/'>Main page full load</a>
+                <a href='/' data-goto='main'>Main page full load</a>
                 <p>${link('Main page ajax', 'main')}</p>
                 <p>Data 2: ${data2}</p>
                 <p>Table</p>
                 ${table}
                 """);
+        // language=JavaScript
         setJs("""
-                console.log("delaj");
+                let pero = "setJs second page";
+                console.log("delaj "+ pero);
                 """);
         data2 = RandomStringUtils.randomAlphabetic(8);
     }
 
     @Override
-    public void onRequest(Request req, Response resp, SiteContext siteContext) {
+    public void onRequest(HttpServletRequest req, HttpServletResponse resp, SiteContext siteContext) {
     }
 }

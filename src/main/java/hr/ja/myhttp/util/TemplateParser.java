@@ -3,7 +3,6 @@ package hr.ja.myhttp.util;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import hr.ja.myhttp.gui.Page;
 import hr.ja.myhttp.gui.Widget;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +47,4 @@ public class TemplateParser {
         t.process(model, out);
         return out.toString();
     }
-
-
 }

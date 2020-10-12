@@ -1,5 +1,6 @@
 package hr.ja.myhttp.gui;
 
+import hr.ja.myhttp.util.Page;
 import lombok.extern.slf4j.Slf4j;
 
 public class MenuItem {
